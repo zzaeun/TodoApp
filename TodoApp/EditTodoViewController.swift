@@ -7,23 +7,28 @@
 
 import UIKit
 
-class EditTodoViewController: UIViewController {
+protocol EditTodoDelegate: AnyObject {
+    func didEditTodo(text: String, at index: Int)  // 몇 번째가 수정이 되어야하는지 필요
+}
 
+
+class EditTodoViewController: UIViewController {
+    
+    @IBOutlet weak var textField: UITextField!
+    var originText: String?
+    var index: Int?
+    weak var delegate: EditTodoDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        textField.text = originText
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func didTapUpdate(_ sender: Any) {
+        guard let newText = textField.text, !newText.isEmpty,
+              let index = index else { return }
+        delegate?.didEditTodo(text: newText, at: index)
+        dismiss(animated: true)
     }
-    */
 
 }

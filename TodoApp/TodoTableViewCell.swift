@@ -9,11 +9,27 @@ import UIKit
 
 class TodoTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
+    
+    var toggleDone: (() -> Void)?
+    var toggleFavorite: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
+    @IBAction func didTapDone(_ sender: Any) {
+        toggleDone?()
+        print("done!")
+    }
+    
+    @IBAction func didTapFavorite(_ sender: Any) {
+        toggleFavorite?()
+
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
